@@ -1,16 +1,11 @@
 let products = [];
     let display = [];
     let cart = JSON.parse(localStorage.getItem('zylo_cart') || '[]');
-
-    /* ---------------- Helpers ---------------- */
     const $ = id => document.getElementById(id);
     function money(n){ return '₹' + parseFloat(n).toFixed(2); }
 
-    /* ---------------- Fetch products ---------------- */
     fetch('https://fakestoreapi.com/products')
-      .then(r => r.json())
-      .then(data => {
-        // attach a random condition (2..5) and small random discount for demo
+      .then(r => r.json
         products = data.map(p => ({...p, cond: Math.floor(Math.random()*3)+2}));
         display = [...products];
         initCategories();
@@ -119,8 +114,6 @@ let products = [];
       const it = products[idx];
       addToCartItem(it, 1);
     }
-
-    /* ---------------- Modal logic ---------------- */
     let currentModalItem = null;
     function openModal(idx){
       const p = products[idx];
@@ -146,8 +139,6 @@ let products = [];
       addToCartItem(currentModalItem, q);
       $('modal').style.display='none';
     });
-
-    /* ---------------- Filters / sort ---------------- */
     function initCategories(){
       const cats = [...new Set(products.map(p=>p.category))];
       const container = $('catChips');
@@ -197,8 +188,6 @@ let products = [];
       if(s === 'price-desc') list.sort((a,b)=>calcDiscounted(b)-calcDiscounted(a));
       renderGrid(list);
     }
-
-    /* ---------------- Small helpers ---------------- */
     function calcDiscounted(p){
       // attach discount if not attached
       if(!p._discount) p._discount = Math.round(Math.random()*45);
@@ -210,7 +199,6 @@ let products = [];
     }
     function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 
-    /* ---------------- Events ---------------- */
     // global search + sidebar search
     $('globalSearch').addEventListener('input', ()=>applyFilters());
     $('priceFilter').addEventListener('change', applyFilters);
@@ -222,7 +210,6 @@ let products = [];
       applyFilters();
     });
 
-    // category quick click for hero
     $('browseBtn').addEventListener('click', ()=>{ window.scrollTo({top:260, behavior:'smooth'}); });
     document.getElementById('sellBtn').addEventListener('click', ()=>{ alert('Sell flow placeholder — add a form for seller onboarding.'); });
 
@@ -258,6 +245,4 @@ let products = [];
       if(e.target.id === 'modal') { document.getElementById('modal').style.display = 'none'; }
     });
 
-    // when products loaded, apply initial filters
-    // (a short delay might be used when nav param present)
-    setTimeout(()=>{ /* no-op initial */ }, 500);
+    setTimeout(()=>{ }, 500);
