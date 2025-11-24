@@ -1,11 +1,12 @@
-let products = [];
+    let products = [];
     let display = [];
     let cart = JSON.parse(localStorage.getItem('zylo_cart') || '[]');
     const $ = id => document.getElementById(id);
     function money(n){ return '₹' + parseFloat(n).toFixed(2); }
-
     fetch('https://fakestoreapi.com/products')
-      .then(r => r.json
+      .then(r => r.json())
+      .then(data => {
+        // attach a random condition (2..5) and small random discount for demo
         products = data.map(p => ({...p, cond: Math.floor(Math.random()*3)+2}));
         display = [...products];
         initCategories();
@@ -43,13 +44,7 @@ let products = [];
         grid.appendChild(card);
       });
     }
-        /*for(let p of products) {
-        let i = document.createElement("grid");
-        i.classList.toggle("product");
-        let value = ["Brand New", "Lightly Used", "Like New", "Well Used"];
-        let rindex = Math.round(Math.random()*3);
-        products.setAttribute("title", value[rindex]);}*/
-    
+
     function renderQuickPicks(){
       const qdiv = document.getElementById('quickCats');
       qdiv.innerHTML = '';
@@ -114,19 +109,20 @@ let products = [];
       const it = products[idx];
       addToCartItem(it, 1);
     }
+
     let currentModalItem = null;
     function openModal(idx){
       const p = products[idx];
       currentModalItem = p;
       // calculate discount
       p._discount = Math.round(Math.random()*45);
-      $('modalImg').style.backgroundImage = `url('${p.image}')`;
+      $('modalImg').style.backgroundImage = url('${p.image}');
       $('modalTitle').innerText = p.title;
       $('modalCategory').innerText = capitalize(p.category);
       $('modalPrice').innerText = money(calcDiscounted(p));
       $('modalOld').innerText = money(p.price);
       $('modalDesc').innerText = p.description;
-      $('modalDiscount').innerText = p._discount ? `-${p._discount}%` : '';
+      $('modalDiscount').innerText = p._discount ? -${p._discount}% : '';
       $('qty').value = 1;
       $('modal').style.display = 'flex';
       $('modal').setAttribute('aria-hidden', 'false');
@@ -139,6 +135,8 @@ let products = [];
       addToCartItem(currentModalItem, q);
       $('modal').style.display='none';
     });
+
+    /* ---------------- Filters / sort ---------------- */
     function initCategories(){
       const cats = [...new Set(products.map(p=>p.category))];
       const container = $('catChips');
@@ -198,7 +196,6 @@ let products = [];
       return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
     function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
-
     // global search + sidebar search
     $('globalSearch').addEventListener('input', ()=>applyFilters());
     $('priceFilter').addEventListener('change', applyFilters);
@@ -210,6 +207,7 @@ let products = [];
       applyFilters();
     });
 
+    // category quick click for hero
     $('browseBtn').addEventListener('click', ()=>{ window.scrollTo({top:260, behavior:'smooth'}); });
     document.getElementById('sellBtn').addEventListener('click', ()=>{ alert('Sell flow placeholder — add a form for seller onboarding.'); });
 
@@ -228,21 +226,21 @@ let products = [];
       ic.className = document.body.classList.contains('dark') ? 'fa-solid fa-sun' : 'fa-regular fa-moon';
     });
 
-    // cart behavior helpers
     function addToCartItemExternal(id, qty=1){
       const p = products.find(x=>x.id===id);
       if(p) addToCartItem(p, qty);
     }
 
-    // called from product card to open modal by index
     window.openModal = openModal;
     window.addToCartIndex = addToCartIndex;
     window.changeQty = changeQty;
     window.removeCart = removeCart;
 
-    // small UX: click outside modal to close
     document.getElementById('modal').addEventListener('click', (e)=>{
       if(e.target.id === 'modal') { document.getElementById('modal').style.display = 'none'; }
     });
 
-    setTimeout(()=>{ }, 500);
+    // when products loaded, apply initial filters
+    // (a short delay might be used when nav param present)
+    setTimeout(()=>{ /* no-op initial */ }, 500);
+  </script>
