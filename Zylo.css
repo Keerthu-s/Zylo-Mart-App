@@ -1,5 +1,5 @@
 :root{
-      --bg: #f6f8fb; 
+      --bg: #f6f8fb;
       --surface: #ffffff;
       --muted: #6b7280;
       --text: #0f1724;
@@ -9,11 +9,12 @@
       --btn-grad: linear-gradient(90deg,var(--color-a),#8fc6ff);
       --glass-border: rgba(124,134,162,0.08);
       --card-radius: 12px;
+      --foot-color:rgb(117, 115, 115);
       --elev: 0 12px 30px rgba(18,24,45,0.06);
     }
     body.dark{
-      --bg: #071023;
-      --surface: #0f1724;
+      --surface: #3d4b68;
+      --bg: #192840;
       --muted: #9aa4b2;
       --text: #e6eef6;
       --color-a: #1f6feb;
@@ -21,6 +22,7 @@
       --btn-grad: linear-gradient(90deg,#1f6feb,#2dd6b4);
       --glass-border: rgba(255,255,255,0.04);
       --elev: 0 14px 40px rgba(2,6,23,0.6);
+      --foot-color:#3d4b68;
     }
 
     /* ---------------- Base ---------------- */
@@ -104,13 +106,13 @@
       padding:20px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
       box-shadow:var(--elev);border:1px solid var(--glass-border);
     }
-    body.dark .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02))}
+    body.dark .hero-card{background:linear-gradient(180deg, rgba(72, 62, 62, 0.03), rgba(255,255,255,0.02))}
 
     .hero h1{margin:0 0 8px;font-size:26px}
     .hero p.lead{margin:0;color:var(--muted)}
     .cta{display:flex;gap:10px;margin-top:12px}
     .btn{padding:10px 14px;border-radius:10px;border:0;background:var(--btn-grad);color:#fff;font-weight:600;cursor:pointer}
-    .btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--text)}
+    .btn.ghost{background:transparent;border:1px solid rgba(72, 62, 62, 0.03);color:var(--text)}
     .hero-art{width:360px;height:220px;border-radius:10px;border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;background:linear-gradient(120deg, rgba(108,155,255,0.08), rgba(122,211,201,0.05));overflow:hidden}
     .hero-art img{max-width:100%;height:auto;display:block}
 
@@ -150,4 +152,14 @@
       .panel{flex-direction:column}
       .big-image{width:100%;height:55vw}
       .cart-drawer{right:12px;top:auto;bottom:18px;width:92%}
+    }
+    footer>div{
+      background-color:var(--foot-color);
+      color:whitesmoke;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      overflow:hidden;
     }
